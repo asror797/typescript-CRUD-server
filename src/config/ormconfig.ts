@@ -8,6 +8,9 @@ export const dataSource = new DataSource({
    port: 5432,
    username: 'asror',
    password: 'aaa13579#',
-   synchronize: false,
+   database:'typeorm',
+   synchronize: true,
    entities: [path.join(__dirname,'..','entities','*.entity.{ts,js}')]
 })
+
+dataSource.initialize();
