@@ -60,6 +60,35 @@ app.delete('/users',async(req:Request,res:Response) => {
    }
 })
 
+
+app.put('/users',async(req:Request,res:Response) => {
+
+   try {
+
+      const { firstname , lastname , email } = req.body
+
+      const updateData = await dataSource
+            .createQueryBuilder()
+            .update(Users)
+            .set(req.body)
+            .where("id = :id" , { id: req.body.id})
+            .returning(['id','firstname','lastname'])
+            .execute()
+      res.json(updateData)
+
+      // await dataSource
+      //    .createQueryBuilder()
+      //    .update(User)
+      //    .set({ firstName: "Timber", lastName: "Saw" })
+      //    .where("id = :id", { id: 1 })
+      //    .execute()
+
+   } catch (error) {
+      console.log(error);
+      res.sendStatus(500)
+   }
+})
+
 app.listen(PORT,() => {
    console.log('Server is runing at 9000')
 })
